@@ -1,0 +1,251 @@
+.horizontal-section-outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.horizontal-wrapper {
+  display: flex;
+  height: 100vh;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+  }
+
+  &.after-fixed {
+    position: absolute;
+    left: 0;
+  }
+
+  &.final-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+  }
+}
+
+
+.horizontal-wrapper {
+  width: 100%;
+}
+
+.horizontal-wrapper.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.horizontal-wrapper.after-fixed {
+  position: absolute;
+  left: 0;
+  z-index: 10;
+}
+
+
+
+.horizontal-item {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  width: 50%;
+  height: 100vh;
+  flex-shrink: 0;
+  padding: 80px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(127, 201, 248, 0.5), rgba(128, 137, 224, 0.5));
+
+  margin: 0 40px;
+  position: relative;
+  color: #fff;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.item-number {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  font-size: 160px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+}
+
+.horizontal-item h2 {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin: 0 0 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.horizontal-item h2 + p {
+  font-size: 50px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+}
+
+.horizontal-item p + p {
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
+}
+
+.horizontal-item .read-more {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+}
+
+.horizontal-item .read-more::after {
+  content: "→";
+  font-size: 20px;
+}
+
+
+//여기서부터 끝 섹션
+.horizontal-end-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  position: relative;
+  font-family: 'Pretendard', sans-serif;
+  color: #fff;
+
+  h2 {
+    position: absolute;
+    top: 100px;
+    left: 80px;
+    font-size: 5vw;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    white-space: pre-line; // 줄바꿈 유지
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    font-size: 1.5vw;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: #fff;
+    gap: 4px;
+
+    .arrow {
+      font-size: 18px;
+      animation: bounce 1.2s infinite;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+
+
+@media (max-width: 768px) {
+
+  .horizontal-item {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  
+    width: 100%;
+    height: 100vh;
+    flex-shrink: 0;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(127, 201, 248, 0.5), rgba(128, 137, 224, 0.5));
+  
+    margin: 0 0 0 1rem ;
+    position: relative;
+    color: #fff;
+    font-family: 'Pretendard', sans-serif;
+  }
+
+  .item-number {
+    top: 40px;
+    left: 40px;
+    font-size: 120px;
+  }
+
+  .horizontal-end-section {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    position: relative;
+    font-family: 'Pretendard', sans-serif;
+    color: #fff;
+  
+    h2 {
+      position: absolute;
+      top: 100px;
+      left: 80px;
+      font-size: 6vw;
+      font-weight: 400;
+      line-height: 1.5;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      white-space: pre-line; // 줄바꿈 유지
+    }
+  
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      font-size: 4vw;
+      font-weight: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      color: #fff;
+      gap: 4px;
+  
+      .arrow {
+        font-size: 18px;
+        animation: bounce 1.2s infinite;
+      }
+    }
+  }
+}

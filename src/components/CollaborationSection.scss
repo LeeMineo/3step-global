@@ -1,0 +1,961 @@
+
+.collab-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #2E2F30;
+  color: #fff;
+
+  font-family: 'Pretendard', sans-serif;
+
+  z-index: 10000;
+
+/* 카드 진입/종료 애니메이션 */
+.collab-section {
+  &.entering {
+    animation: cardExpand 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  &.exiting {
+    animation: cardShrink 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+/* 내용이 나타날 때 애니메이션 */
+.collab-content {
+  transition: opacity 0.4s ease;
+  
+  &.hidden {
+    opacity: 0;
+  }
+  
+  &.visible {
+    opacity: 1;
+    transition-delay: 0.2s;
+  }
+}
+
+/* 작은 카드 스타일 - 초기 및 종료 상태 */
+.card-initial, .card-exit {
+  width: 320px;
+  height: 200px;
+  border-radius: 20px;
+  background-color: #2E2F30;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6) translateY(50px);
+  z-index: 999;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+// 진행 상태 표시기
+.progress-indicators {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 20;
+  
+  .indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    
+    &.active {
+      background-color: rgba(255, 255, 255, 0.9);
+      transform: scale(1.2);
+    }
+  }
+}
+
+// 다음 버튼
+.next-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 20;
+  transition: opacity 0.3s ease;
+  
+  &:hover {
+    opacity: 0.7;
+  }
+  
+  .next-text {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .next-arrow {
+    font-size: 20px;
+    animation: bounce 1.5s infinite;
+  }
+}
+
+// 카운터 섹션
+.counter-section {
+  position: relative;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideInUpFade 0.8s ease forwards;
+  }
+
+  &.animate-out {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideOutDownFade 0.6s ease forwards;
+  }
+
+  .tagline {
+    text-align: center;
+    margin: 7rem 0;
+
+    h2, h3 {
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    h2 {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 3rem;
+      background: linear-gradient(to right, #7FC9F8, #8089E0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  .counters {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    gap:4rem;
+
+    .counter-item {
+      text-align: center;
+
+      .counter-label {
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .counter-value {
+        font-size: 96px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}
+
+// 휴대폰 프레임
+.phone-frame {
+  position: relative;
+  width: 320px;
+  height: 650px;
+  border-radius: 40px;
+  background-color: #000;
+  border: 10px solid #000;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 0.8s ease forwards;
+  z-index: 20;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 30px;
+    background-color: #000;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    z-index: 20;
+  }
+  
+  // 슬라이드 아이템 스타일 추가
+  .slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateY(0);
+    transition: transform 0.5s ease;
+    
+    &.active {
+      z-index: 5;
+    }
+    
+    &.previous {
+      z-index: 4;
+    }
+    
+    // 위로 슬라이드
+    &.sliding-up {
+      transform: translateY(-100%);
+    }
+    
+    &.sliding-up-out {
+      transform: translateY(-100%);
+    }
+    
+    // 아래로 슬라이드
+    &.sliding-down {
+      transform: translateY(0);
+    }
+    
+    &.sliding-down-out {
+      transform: translateY(100%);
+    }
+  }
+  
+  // 슬라이드 진입 애니메이션
+  .slide-item.active.sliding-up {
+    animation: slideInFromBottom 0.5s ease forwards;
+  }
+  
+  .slide-item.active.sliding-down {
+    animation: slideInFromTop 0.5s ease forwards;
+  }
+  
+  .slide-item.previous.sliding-up-out {
+    animation: slideOutToTop 0.5s ease forwards;
+  }
+  
+  .slide-item.previous.sliding-down-out {
+    animation: slideOutToBottom 0.5s ease forwards;
+  }
+  
+  .phone-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    
+    .phone-video-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      
+      .phone-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .collab-info {
+      position: absolute;
+      bottom: 30px;
+      left: 20px;
+      z-index: 22;
+      
+      .collab-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      
+      .collab-username {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+// 휴대폰 컨테이너
+.phone-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  padding: 0 20px;
+
+  .collab-details {
+    position: absolute;
+    top: 20%;
+    transform: translateY(-50%);
+    text-align: right;
+    max-width: 100%;
+    opacity: 0;
+    animation: slideInUpFade 0.8s ease forwards;
+    animation-delay: 0.3s;
+  
+    &.right-align {
+      left: 100%;
+      text-align: left;
+      padding-left: 3rem;
+      .collab-brand {
+        align-items: flex-start;
+      }
+    }
+  
+    &.left-align {
+      right: 100%;
+      text-align: right;
+      padding-right: 3rem;
+      .collab-brand {
+        align-items: flex-end;
+      }
+    }
+  }
+  
+  .collab-details {
+    .collab-product-title {
+      font-size: 64px;
+      font-weight: 700;
+      margin: 0 0 30px 0;
+      line-height: 1.1;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      
+      &.slide-in {
+        animation: slideInUpFade 0.5s ease forwards;
+      }
+      
+      &.slide-in-top {
+        animation: slideInDownFade 0.5s ease forwards;
+      }
+    }
+    
+    .collab-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      
+      &.slide-in {
+        animation: slideInUpFade 0.5s ease forwards;
+        animation-delay: 0.1s;
+      }
+      
+      &.slide-in-top {
+        animation: slideInDownFade 0.5s ease forwards;
+        animation-delay: 0.1s;
+      }
+
+      .collab-with {
+        position: relative;
+        display: inline-block;
+      
+        .underline-animation {
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          height: 1px;
+          width: 0;
+          background-color: rgba(255, 255, 255, 0.3);
+          animation: drawLine 0.6s ease forwards;
+          animation-delay: 0.3s;
+        }
+      }
+      
+      .collab-label {
+        font-size: 16px;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+        position: relative;
+        
+        .underline-animation {
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background-color: rgba(255, 255, 255, 0.3);
+          animation: drawLine 0.6s ease forwards;
+          animation-delay: 0.3s;
+        }
+      }
+      
+      .collab-with {
+        font-size: 24px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+  
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* fixed에서 relative로 전환될 때 부드럽게 처리하기 위한 속성 */
+    transition: opacity 0.6s ease, transform 0.6s ease, position 0s;
+  }
+  
+  /* fixed 상태에서 빠져나올 때 추가 클래스 */
+  &.exiting-fixed {
+    /* 이 클래스는 JS에서 fixed 해제 시 잠시 추가했다가 제거 */
+    transition: all 0.3s ease;
+  }
+  
+  &.scroll-locked {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      animation: pulse 1.5s infinite;
+    }
+  }
+}
+
+/* 다음 섹션으로 넘어갈 때 부드러운 표시를 위한 스타일 */
+.next-section-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  
+  &.visible {
+    opacity: 1;
+    animation: pulse 1.5s infinite;
+  }
+}
+
+
+/* 카운터 값이 변경될 때 애니메이션 적용 */
+.counter-item .counter-value {
+  font-size: 96px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+/* 카운터 값 변경 시 애니메이션 */
+.counter-item .counter-value.changing {
+  animation: numberChange 0.5s ease forwards;
+  color: #7FC9F8; /* 변경 중에 색상 적용 */
+}
+
+/* 카운터 섹션이 화면에 들어올 때 추가 애니메이션 */
+.counter-section {
+  position: relative;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.counter-section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeInScale 1.2s ease forwards;
+}
+
+
+// 배경 워터마크
+.background-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 35vw;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+// 콘텐츠 영역
+.collab-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+// 카운터 섹션
+.stats-container {
+  width: 100%;
+  max-width: 1200px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 5;
+  
+  &.active {
+    opacity: 1;
+    transform: translateY(0);
+    animation: highlight 0.5s ease 1.2s;
+  }
+  
+  .tagline {
+    text-align: center;
+    margin-top: 7rem;
+    margin-bottom: 7rem;
+    
+    h2, h3 {
+      margin: 0;
+      line-height: 1.3;
+    }
+    
+    h2 {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    
+    h3 {
+      font-size: 3rem;
+      background: linear-gradient(to right, #7FC9F8, #8089E0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+  
+}
+
+
+/* 슬라이드 인/아웃 애니메이션 */
+@keyframes slideInUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDownFade {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+}
+
+/* 선 그리기 애니메이션 */
+@keyframes drawLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+// 슬라이드 애니메이션 키프레임
+@keyframes slideOutToTop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+
+
+@keyframes slideOutToBottom {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes highlight {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+@keyframes pulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.1);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+.counter-section.animate-out {
+  animation: slideOutDownFade 0.6s ease forwards;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate(30px, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes numberChange {
+  0% {
+    opacity: 0.9;
+    transform: translateY(5px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 카운터가 최종 목표치에 도달할 때 하이라이트 효과 */
+@keyframes finalHighlight {
+  0% {
+    color: #ffffff;
+  }
+  50% {
+    color: #7FC9F8;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
+
+.counter-complete {
+  animation: finalHighlight 0.8s ease forwards;
+}
+
+
+// 새로운 애니메이션 키프레임 추가
+@keyframes slideInUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDownFade {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+}
+
+@keyframes drawLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+
+
+/* 모바일 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+  /* 기본 섹션 스타일 조정 */
+  .collab-section {
+    .background-watermark {
+      font-size: 50vw !important;
+    }
+  }
+
+  /* 내부 콘텐츠 레이아웃 조정 */
+  .collab-inner-content {
+    padding: 20px !important;
+  }
+  
+  /* 진행 상태 표시기 조정 */
+  .progress-indicators {
+    left: 15px !important;
+    
+    .indicator {
+      width: 8px !important;
+      height: 8px !important;
+    }
+  }
+
+  /* 다음 버튼 조정 */
+  .next-indicator {
+    bottom: 20px !important;
+    right: 20px !important;
+    
+    .next-text {
+      font-size: 14px !important;
+    }
+    
+    .next-arrow {
+      font-size: 18px !important;
+    }
+  }
+
+  /* 카운터 섹션 조정 */
+  .counter-section {
+    .tagline {
+      margin: 3rem 0 !important;
+      
+      h2 {
+        font-size: 1.5rem !important;
+      }
+      
+      h3 {
+        font-size: 2rem !important;
+      }
+    }
+    
+    .counters {
+      flex-direction: column !important;
+      gap: 2rem !important;
+      align-items: center !important;
+      
+      .counter-item {
+        .counter-label {
+          font-size: 18px !important;
+          margin-bottom: 10px !important;
+        }
+        
+        .counter-value {
+          font-size: 48px !important;
+        }
+      }
+    }
+  }
+
+  /* 휴대폰 프레임 조정 */
+  .phone-frame {
+    width: 280px !important;
+    height: 560px !important;
+    border-radius: 30px !important;
+    border: 8px solid #000 !important;
+    
+    &:before {
+      width: 120px !important;
+      height: 20px !important;
+    }
+    
+    .phone-content {
+      .collab-info {
+        bottom: 20px !important;
+        left: 15px !important;
+        
+        .collab-title {
+          font-size: 16px !important;
+        }
+        
+        .collab-username {
+          font-size: 14px !important;
+        }
+      }
+    }
+  }
+
+  /* 휴대폰 컨테이너 조정 */
+  .phone-container {
+    flex-direction: column !important;
+    padding: 0 10px !important;
+    
+    .collab-details {
+      position: relative !important;
+      top: 0 !important;
+      transform: none !important;
+      order: 2 !important;
+      text-align: center !important;
+      margin-top: 2rem !important;
+      width: 100% !important;
+      
+      &.right-align, &.left-align {
+        left: auto !important;
+        right: auto !important;
+        text-align: center !important;
+        padding: 0 1rem !important;
+        
+        .collab-brand {
+          align-items: center !important;
+        }
+      }
+      
+      .collab-product-title {
+        font-size: 32px !important;
+        margin-bottom: 15px !important;
+      }
+      
+      .collab-brand {
+        align-items: center !important;
+        
+        .collab-label {
+          font-size: 14px !important;
+          letter-spacing: 1px !important;
+        }
+        
+        .collab-with {
+          font-size: 18px !important;
+        }
+      }
+    }
+  }
+
+  /* 슬라이드 애니메이션 조정 */
+  @keyframes slideInUpFade {
+    0% {
+      opacity: 0 !important;
+      transform: translateY(20px) !important;
+    }
+    100% {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  }
+  
+  @keyframes slideOutDownFade {
+    0% {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    100% {
+      opacity: 0 !important;
+      transform: translateY(30px) !important;
+    }
+  }
+}

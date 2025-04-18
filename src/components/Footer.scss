@@ -1,0 +1,106 @@
+.business-card-footer {
+  background-color: #fff;
+  color: #000;
+  padding: 3rem 0rem 1rem 0rem;
+  font-family: 'Pretendard', sans-serif;
+
+  .card-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .card-left {
+    flex: 3;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start; // ✅ 왼쪽 정렬로 변경
+    padding-left: 0.5rem;
+
+    .logo {
+      width: 100%;
+      max-width: 140px;
+      height: auto;
+    }
+  }
+
+  .card-right {
+    flex: 7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .top-section {
+      display: flex;
+      flex-direction: row;
+      gap: 3rem;
+      flex-wrap: wrap;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
+
+      .info-block {
+        min-width: 200px;
+
+        h2 {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 0.3rem;
+        }
+
+        .title {
+          font-size: 1rem;
+          margin-bottom: 0.8rem;
+        }
+
+        p {
+          font-size: 0.95rem;
+          margin: 0.3rem 0;
+        }
+      }
+
+      .address-block {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .address {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.6rem;
+
+          .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid #000;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            white-space: nowrap;
+            margin-top: 0.2rem;
+          }
+
+          p {
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.4;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+  }
+
+  .footer-copyright {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 1rem;
+  }
+}
