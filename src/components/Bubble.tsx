@@ -9,6 +9,7 @@ import "./BubbleScene.scss";
 const Bubble = ({ scrollY }: { scrollY: number }) => {
   const mesh = useRef<THREE.Mesh>(null);
 
+
   useFrame(() => {
     if (mesh.current) {
       mesh.current.rotation.y += 0.002;
@@ -48,6 +49,8 @@ export default function BubbleScene() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const introTextRef = useRef<HTMLDivElement>(null);
+  const isChrome = typeof window !== "undefined" && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +83,7 @@ export default function BubbleScene() {
   useEffect(() => {
     document.body.style.overflow = isLocked ? "hidden" : "auto";
   }, [isLocked]);
+  
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -112,6 +116,7 @@ export default function BubbleScene() {
   }, [isAnimating, isLocked]);
 
   return (
+    
     <>
       {/* ✅ 비눗방울 영역 */}
       <div
@@ -143,16 +148,23 @@ export default function BubbleScene() {
           pointerEvents: scrollY === 1 ? "none" : "auto",
         }}
       >
-        <svg className="aurora-svg" viewBox="0 0 1440 600" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="aurora-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7FC9F8" />
-              <stop offset="50%" stopColor="#A5CFFF" />
-              <stop offset="100%" stopColor="#8089E0" />
-            </linearGradient>
-          </defs>
-          <path d="M0,300 C360,100 1080,500 1440,300" className="aurora-line" />
-        </svg>
+<svg className="aurora-svg" viewBox="0 0 1440 600" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="aurora-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#7FC9F8" />
+      <stop offset="50%" stopColor="#A5CFFF" />
+      <stop offset="100%" stopColor="#8089E0" />
+    </linearGradient>
+  </defs>
+
+  {isChrome && (
+    <path
+      d="M0,300 C360,100 1080,500 1440,300"
+      className="aurora-line"
+    />
+  )}
+</svg>
+
 
         <div
           ref={introTextRef}
