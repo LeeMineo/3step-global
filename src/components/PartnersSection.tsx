@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import "./PartnersSection.scss";
+import { useTranslation } from "react-i18next";
 
 const partners = [
   { id: 1, name: "Olive Young", logo: "/brand/olive.png" },
@@ -12,6 +13,7 @@ const partners = [
 
 export default function PartnersSection() {
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     if (trackRef.current) {
@@ -26,7 +28,7 @@ export default function PartnersSection() {
       <div className="partnersHeader">
         <h2 className="partnersTitle">Partners<br />Who Believe in Us</h2>
         <p className="partnersSubtitle">
-        국내외 다양한 뷰티 브랜드와 함께 의미 있는 협업을 이어가고 있습니다.
+          {t('partners_subtitle')}
         </p>
       </div>
 

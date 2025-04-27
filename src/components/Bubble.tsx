@@ -5,6 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { MeshDistortMaterial, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import "./BubbleScene.scss";
+import { useTranslation } from "react-i18next";
 
 const Bubble = ({ scrollY }: { scrollY: number }) => {
   const mesh = useRef<THREE.Mesh>(null);
@@ -49,6 +50,7 @@ export default function BubbleScene() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const introTextRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation('common');
   //const isChrome = typeof window !== "undefined" && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
 
@@ -172,10 +174,11 @@ export default function BubbleScene() {
           className="aurora-text"
         >
           <h2>Our dreams will change the world</h2>
-          <p>우리의 콘텐츠는 이제 글로벌로 향합니다.</p>
-          <p>상상 그 너머의 인터랙션으로</p>
-          <p>비즈니스의 성공을 실현합니다.</p>
-          <p>그 시작은 바로 오늘입니다.</p>
+          <p>{t('bubble_text1')}</p>
+          <p>{t('bubble_text2')}</p>
+          <p>{t('bubble_text3')}</p>
+          <p>{t('bubble_text4')}</p>
+
         </div>
       </div>
 

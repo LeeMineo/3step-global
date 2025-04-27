@@ -2,6 +2,24 @@
     "overview": "会社概要",
     "service": "サービス",
     "reference": "参考資料",
-    "contact": "お問い合わせ"
+    "contact": "お問い合わせ",
+
+    "bubble_text1": "私たちのコンテンツは今、グローバルへ。",
+    "bubble_text2": "想像を超えるインタラクションで、",
+    "bubble_text3": "ビジネスの成功を実現します。",
+    "bubble_text4": "その始まりは今日からです。",
+
+    "service_01_title": "Content Planning",
+    "service_01_desc": "広告・コンテンツ企画チームは、広告企画から外部企業との協業により大規模な広告を展開します。",
+    "service_02_title": "Live Agency",
+    "service_02_desc": "単なるライブ配信だけでなく、広告・マーケティング＆コマースビジネスまで連携可能なコンテンツIP事業も進行中です。",
+    "service_03_title": "Live Commerce",
+    "service_03_desc": "ショートフォームコンテンツとコマースを共に企画し、高いコンバージョンを実現し、様々なカテゴリーへ拡張しています。",
+    "service_04_title": "Viral Marketing",
+    "service_04_desc": "SNSを通じて自然な噂を創出し、本物のように感じられるコンテンツを企画し、持続的な効果を誘導します。",
+    "horizontal_end_title": "スリーステップグローバルは \n韓国初のMCN＆ライブ事業を \n併行する企業です。",
+    "scroll_indicator": "The influence of our company",
+
+    "partners_subtitle": "国内外のさまざまなビューティーブランドと共に、意味のある協業を続けています。"
   }
   
