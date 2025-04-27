@@ -49,7 +49,7 @@ export default function BubbleScene() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const introTextRef = useRef<HTMLDivElement>(null);
-  const isChrome = typeof window !== "undefined" && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  //const isChrome = typeof window !== "undefined" && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
 
   useEffect(() => {
@@ -148,7 +148,8 @@ export default function BubbleScene() {
           pointerEvents: scrollY === 1 ? "none" : "auto",
         }}
       >
-<svg className="aurora-svg" viewBox="0 0 1440 600" preserveAspectRatio="none">
+        {/* 오로라 라인 */}
+{/* <svg className="aurora-svg" viewBox="0 0 1440 600" preserveAspectRatio="none">
   <defs>
     <linearGradient id="aurora-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stopColor="#7FC9F8" />
@@ -163,7 +164,7 @@ export default function BubbleScene() {
       className="aurora-line"
     />
   )}
-</svg>
+</svg> */}
 
 
         <div

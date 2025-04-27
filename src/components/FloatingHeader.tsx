@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next"; // react-i18next!
+import i18n from "@/lib/i18n"; // 직접 초기화한 i18n import!
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { languages } from "@/i18n/settings";
 import "./FloatingHeader.scss";
 
 export default function FloatingHeader() {
+  const { t } = useTranslation('common');
   const [showHeader, setShowHeader] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -13,10 +17,8 @@ export default function FloatingHeader() {
   // ✅ 커서 위치에 따라 헤더 표시/숨김
   useEffect(() => {
     const threshold = 50;
-
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
-
       if (
         clientY <= threshold ||
         clientX <= threshold ||
@@ -24,13 +26,11 @@ export default function FloatingHeader() {
       ) {
         setShowHeader(true);
       } else {
-        // 메뉴가 열려 있지 않을 때만 숨김
         if (!isMobileMenuOpen) {
           setShowHeader(false);
         }
       }
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [isMobileMenuOpen]);
@@ -62,10 +62,10 @@ export default function FloatingHeader() {
     };
   }, [isMobileMenuOpen]);
 
+  // ✅ 언어 변경 (URL 변화 없음)
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // 언어 변경 로직 (추후 i18n 연결 가능)
-    const lang = e.target.value;
-    console.log("Selected language:", lang);
+    const lang = e.target.value.toLowerCase();
+    i18n.changeLanguage(lang); // 안전하게 언어 변경!
   };
 
   return (
@@ -85,14 +85,16 @@ export default function FloatingHeader() {
 
           {/* 데스크탑 nav */}
           <nav className="header-nav desktop-only">
-            <a href="#company">Overview</a>
-            <a href="#creators">Service</a>
-            <a href="#business">Reference</a>
-            <a href="#contact">Contact</a>
-            <select onChange={handleLanguageChange}>
-              <option value="KO">KO</option>
-              <option value="EN">EN</option>
-              <option value="JP">JP</option>
+            <a href="#company">{t('overview')}</a>
+            <a href="#creators">{t('service')}</a>
+            <a href="#business">{t('reference')}</a>
+            <a href="#contact">{t('contact')}</a>
+            <select onChange={handleLanguageChange} value={i18n.language?.toUpperCase() ?? 'KO'}>
+              {languages.map((lng) => (
+                <option key={lng} value={lng.toUpperCase()}>
+                  {lng.toUpperCase()}
+                </option>
+              ))}
             </select>
           </nav>
 
@@ -114,14 +116,16 @@ export default function FloatingHeader() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <a href="#company">Overview</a>
-                <a href="#creators">Service</a>
-                <a href="#business">Reference</a>
-                <a href="#contact">Contact</a>
-                <select onChange={handleLanguageChange}>
-                  <option value="KO">KO</option>
-                  <option value="EN">EN</option>
-                  <option value="JP">JP</option>
+                <a href="#company">{t('overview')}</a>
+                <a href="#creators">{t('service')}</a>
+                <a href="#business">{t('reference')}</a>
+                <a href="#contact">{t('contact')}</a>
+                <select onChange={handleLanguageChange} value={i18n.language?.toUpperCase() ?? 'KO'}>
+                  {languages.map((lng) => (
+                    <option key={lng} value={lng.toUpperCase()}>
+                      {lng.toUpperCase()}
+                    </option>
+                  ))}
                 </select>
               </motion.div>
             )}
