@@ -66,11 +66,16 @@
   color: white;
   z-index: 10;
   transition: opacity 1s ease;
+  font-family: 'Pretendard', sans-serif;
 
-  h2 {
+  .desktop-heading {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
+  }
+
+  .mobile-heading {
+    display: none;
   }
 
   p {
@@ -111,10 +116,27 @@
   .bubble-logo img {
     width: 65vw;
   }
-
-  .aurora-text h2 {
-    font-size: 1.8rem;
+  .aurora-text {
+    width: 90%; // 기본 auto 대신 비율로
+    max-width: 600px; // 데스크탑에서 너무 넓지 않게
   }
+
+  // .desktop-heading {
+  //   display: none;
+  // }
+
+  // .mobile-heading {
+  //   content: "Our dreams will \A change the world";
+  //   white-space: pre-line;
+  //   display: block;
+  //   font-size: 1.8rem;
+  //   font-weight: 600;
+  //   color: white;
+  //   opacity: 1;
+  //   position: relative;
+    
+  //   display: block;
+  // }
 
   .aurora-text p {
     font-size: 1.1rem;

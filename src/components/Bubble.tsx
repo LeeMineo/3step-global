@@ -173,7 +173,8 @@ export default function BubbleScene() {
           ref={introTextRef}
           className="aurora-text"
         >
-          <h2>Our dreams will change the world</h2>
+          <h2 className="desktop-heading">Our dreams will change the world</h2>
+          <h2 className="mobile-heading">Our dreams will<br />change the world</h2>
           <p>{t('bubble_text1')}</p>
           <p>{t('bubble_text2')}</p>
           <p>{t('bubble_text3')}</p>
