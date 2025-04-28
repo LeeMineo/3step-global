@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect, JSX } from "react";
 import "./CollaborationSection.scss";
+import { useTranslation } from "react-i18next";
 
 // 타입 정의
 type Collaboration = {
@@ -285,16 +286,16 @@ export default function CollabContent({
     
     return undefined;
   }, [isVisible, isScrollLocked, activeIndex, isTransitioning]);
+  
+  const { t } = useTranslation('common');
 
   const renderPhoneContent = (index: number): JSX.Element | null => {
     if (index === 0) {
       return (
         <div className={`counter-section ${counterAnimationClass}`}>
           <div className="tagline">
-            <h2>단순한 콘텐츠를 넘어,</h2>
-            <h3>
-              우리는 <strong>결과</strong>로 증명합니다.
-            </h3>
+            <h2>{t('tagline_title')}</h2>
+            <h3 dangerouslySetInnerHTML={{ __html: t('tagline_subtitle') }} />
           </div>
 
           <div className="counters">
