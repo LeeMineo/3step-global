@@ -30,9 +30,9 @@ const influencers = [
   {
     src: "/influencer/influencer4.png",
     hoverSrc: "/influencer/influencer4_hover.png",
-    name: "2__ni_na__7",
-    followers: "3k",
-    link: "https://www.instagram.com/2__ni_na__7",
+    name: "kagurapyon",
+    followers: "1.5k",
+    link: "https://www.instagram.com/kagurapyon/",
   },
 ];
 
